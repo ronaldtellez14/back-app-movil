@@ -1,0 +1,49 @@
+schema: spec-driven
+
+context: |
+  Proyecto: plataforma de reservas de citas para negocios con agenda (barberías, uñas, spa, peluquería, estética) en Colombia.
+  Este repositorio es SOLO el backend: Java 21, Spring Boot, Maven, PostgreSQL 17, Flyway, Spring Security, MapStruct, springdoc.
+  La app (Flutter) vive en otro repositorio, reservas-app, y consume el contrato OpenAPI de este backend.
+  Cada caso de uso se trabaja como un cambio aquí (reglas y API) y otro en reservas-app (pantallas), con el mismo código de CU.
+  Roles: cliente, invitado, profesional, dueño y administrador de plataforma.
+  Arquitectura: monolito modular, un módulo por dominio (cuentas, negocios, servicios, agenda, reservas,
+  notificaciones, planes, administracion, parametros). Cada módulo es hexagonal: domain, application/port/input,
+  application/port/output, application/service, infrastructure/adapter/input/rest, infrastructure/adapter/output/persistence.
+  El dominio no depende de Spring.
+  Fuente funcional: casos de uso CU-00 a CU-13 aprobados. Sus reglas y escenarios se copian tal cual; no se inventa comportamiento.
+  Principios obligatorios:
+  - Nada quemado: todo plazo, límite, tiempo o cantidad configurable sale de Parámetros, con mínimo y máximo,
+    y jerarquía profesional > negocio > plataforma.
+  - Multi-negocio: toda consulta de datos de un negocio se filtra por ese negocio. Nadie ve datos de otro negocio.
+    El administrador de plataforma nunca ve clientes, citas ni tableros de los negocios.
+  - Ley 1581 de 2012: la autorización de datos es previa, expresa e informada, y se guarda con versión, fecha y hora.
+    Nunca hay datos personales en logs.
+  - Hora de Colombia (America/Bogota) en toda la agenda. Dinero en pesos colombianos, enteros sin decimales.
+  - Cambio mínimo: no refactorizar lo que no se pidió y no agregar dependencias sin autorización.
+  - Si hay duda, detenerse y preguntar.
+  API: REST, JSON en snake_case, OpenAPI en español, errores de dominio con código y mensajes como constantes.
+  Idioma: encabezados y palabras clave de OpenSpec en inglés (Why, SHALL, WHEN, THEN); contenido en español;
+  nombres de cambios y capacidades en español y kebab-case (crear-reserva, registrar-negocio).
+
+rules:
+  proposal:
+    - "Secciones obligatorias: Why, What Changes, Capabilities (New / Modified) e Impact."
+    - "Citar el caso de uso de origen (por ejemplo CU-05) y listar sus escenarios con su estado: incluido, pendiente o fuera de alcance."
+    - "Marcar con BREAKING todo cambio de contrato de la API."
+    - "Agregar una sección 'Puntos a confirmar' en lugar de suponer."
+  specs:
+    - "Cada requisito usa SHALL o MUST y tiene al menos un Scenario con WHEN, THEN y AND."
+    - "Las reglas y los escenarios se copian del caso de uso tal cual; si se ajusta algo, se explica en el proposal."
+    - "Siempre incluir: camino feliz, errores con su código HTTP, acceso denegado por rol, acceso denegado a datos de otro negocio, y qué NO se expone en la respuesta."
+    - "Todo plazo, límite o tiempo se nombra como parámetro (por ejemplo 'el plazo para cancelar del profesional'), nunca como número fijo."
+  design:
+    - "Decisiones numeradas, cada una con su porqué y las alternativas descartadas."
+    - "Indicar el módulo, los puertos y los adaptadores afectados, y las migraciones Flyway nuevas."
+    - "Describir los endpoints nuevos o cambiados (método, ruta, request, response, errores): son el contrato que usará reservas-app."
+    - "Riesgos en formato '[Riesgo] ... -> Mitigación: ...'. Terminar con Open Questions o 'ninguna'."
+  tasks:
+    - "Agrupar por capa en este orden: migración Flyway, dominio, puertos, casos de uso, adaptadores, API REST y DTOs, OpenAPI, pruebas unitarias, pruebas de integración y Validation."
+    - "Cada tarea es concreta y verificable. Las pruebas son tareas explícitas, con JUnit 5 y Mockito, y cobertura de al menos 80% en líneas y ramas."
+    - "Etiquetar las pruebas con el caso de uso (@Tag(\"CU-05\")) y mantener traceability.md del cambio: escenario, prueba y estado."
+    - "Última sección Validation: .\\mvnw.cmd verify en verde (Spotless y JaCoCo), revisar que los logs no expongan datos personales y actualizar traceability.md."
+    - "Si algo no se pudo verificar, dejarlo sin marcar y explicar por qué. Nunca afirmar que una prueba pasó sin ejecutarla."
