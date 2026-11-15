@@ -41,8 +41,8 @@ No aplica: el contrato OpenAPI no cambia. Lo comprueba la prueba 9.7.
 
 ## 8. Pruebas unitarias
 
-- [ ] 8.1 `DefinicionParametroTest` cubre los casos de la decisión 10: dentro de rango, en los límites, debajo del mínimo, encima del máximo, booleano sin rango y lista con un elemento fuera de rango. Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.2 `ConsultarParametroServiceTest`, con `CargarParametroPort` simulado en Mockito, cubre:
+- [x] 8.1 `DefinicionParametroTest` cubre los casos de la decisión 10: dentro de rango, en los límites, debajo del mínimo, encima del máximo, booleano sin rango y lista con un elemento fuera de rango. Verificar: `.\mvnw.cmd test` en verde.
+- [x] 8.2 `ConsultarParametroServiceTest`, con `CargarParametroPort` simulado en Mockito, cubre:
   - clave inexistente → `PARAMETRO_NO_EXISTE`;
   - sin valor guardado → el por defecto;
   - con valor guardado → el guardado;
@@ -52,15 +52,15 @@ No aplica: el contrato OpenAPI no cambia. Lo comprueba la prueba 9.7.
   - tipo equivocado → `IllegalStateException`.
 
   Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.3 `ParametroPersistenceMapperTest` convierte cada tipo (número, booleano y lista), con columnas nulas y no nulas. Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.4 `ParametroPersistenceAdapterTest`, con los repositorios simulados, cubre: definición encontrada, no encontrada, valor de plataforma presente y ausente. Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.5 `RespuestaErrorTest` cubre las fábricas `de`, `de` con campos y `conTraza`, y que `traza_id` solo se serializa cuando tiene valor. Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.6 `ManejadorGlobalErroresTest` cubre cada manejador (validación con nombres en snake_case, cuerpo ilegible, acceso denegado, recurso no encontrado, método no permitido y error no controlado). Para una `ParametroException`:
+- [x] 8.3 `ParametroPersistenceMapperTest` convierte cada tipo (número, booleano y lista), con columnas nulas y no nulas. Verificar: `.\mvnw.cmd test` en verde.
+- [x] 8.4 `ParametroPersistenceAdapterTest`, con los repositorios simulados, cubre: definición encontrada, no encontrada, valor de plataforma presente y ausente. Verificar: `.\mvnw.cmd test` en verde.
+- [x] 8.5 `RespuestaErrorTest` cubre las fábricas `de`, `de` con campos y `conTraza`, y que `traza_id` solo se serializa cuando tiene valor. Verificar: `.\mvnw.cmd test` en verde.
+- [x] 8.6 `ManejadorGlobalErroresTest` cubre cada manejador (validación con nombres en snake_case, cuerpo ilegible, acceso denegado, recurso no encontrado, método no permitido y error no controlado). Para una `ParametroException`:
   - la respuesta es 500 `ERROR_INTERNO` con `traza_id`, sin la clave, el valor, el rango ni el mensaje;
   - el log, capturado con un `ListAppender` de Logback, ya incluido en Spring Boot, contiene el `traza_id`, el tipo y la traza, pero no el mensaje.
 
   Verificar: `.\mvnw.cmd test` en verde.
-- [ ] 8.7 Confirmar que las pruebas unitarias corren sin PostgreSQL. Verificar: `.\mvnw.cmd test` en verde con `DB_URL=jdbc:postgresql://localhost:1/no_existe` solo para esa ejecución.
+- [x] 8.7 Confirmar que las pruebas unitarias corren sin PostgreSQL. Verificar: `.\mvnw.cmd test` en verde con `DB_URL=jdbc:postgresql://localhost:1/no_existe` solo para esa ejecución.
 
 ## 9. Pruebas de integración
 
