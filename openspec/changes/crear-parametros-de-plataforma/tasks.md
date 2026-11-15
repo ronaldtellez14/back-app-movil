@@ -64,19 +64,19 @@ No aplica: el contrato OpenAPI no cambia. Lo comprueba la prueba 9.7.
 
 ## 9. Pruebas de integración
 
-- [ ] 9.1 Agregar `maven-failsafe-plugin` en `<build><plugins>` del `pom.xml`, sin versión ni ejecuciones propias, porque las gestiona el parent (autorizado, decisión 11). Verificar: `.\mvnw.cmd verify` muestra `maven-failsafe-plugin:integration-test` y ejecuta las clases `*IT`.
-- [ ] 9.2 Crear `src/test/resources/application-it.yml` (perfil `it`):
+- [x] 9.1 Agregar `maven-failsafe-plugin` en `<build><plugins>` del `pom.xml`, sin versión ni ejecuciones propias, porque las gestiona el parent (autorizado, decisión 11). Verificar: `.\mvnw.cmd verify` muestra `maven-failsafe-plugin:integration-test` y ejecuta las clases `*IT`.
+- [x] 9.2 Crear `src/test/resources/application-it.yml` (perfil `it`):
   - `spring.datasource.url: ${DB_TEST_URL:jdbc:postgresql://localhost:5432/reservas_test}`, con usuario y contraseña de `.env`; ese valor por defecto es la referencia de `DB_TEST_URL`, sin `.env.example`;
   - `spring.flyway.clean-disabled: false`.
 
   Verificar: una prueba `*IT` con `@ActiveProfiles("it")` se conecta a `reservas_test`.
-- [ ] 9.3 Crear en el código de pruebas la `FlywayMigrationStrategy` con protección: consulta `SELECT current_database()`; si el nombre no termina en `_test`, lanza una excepción sin limpiar; si termina en `_test`, ejecuta `clean()` y luego `migrate()`. Verificar: `FlywayLimpiezaSeguraTest` (unitaria, con Mockito) comprueba que con un nombre como `reservas` se lanza la excepción y nunca se llama `clean()`, y que con `reservas_test` se llama `clean()` y luego `migrate()`.
-- [ ] 9.4 `EsquemaParametrosIT` cubre los escenarios de los requisitos "Definición de parámetro", "La base de datos impide un valor por defecto fuera de rango" y "Valores personalizados por nivel", con un caso por escenario:
+- [x] 9.3 Crear en el código de pruebas la `FlywayMigrationStrategy` con protección: consulta `SELECT current_database()`; si el nombre no termina en `_test`, lanza una excepción sin limpiar; si termina en `_test`, ejecuta `clean()` y luego `migrate()`. Verificar: `FlywayLimpiezaSeguraTest` (unitaria, con Mockito) comprueba que con un nombre como `reservas` se lanza la excepción y nunca se llama `clean()`, y que con `reservas_test` se llama `clean()` y luego `migrate()`.
+- [x] 9.4 `EsquemaParametrosIT` cubre los escenarios de los requisitos "Definición de parámetro", "La base de datos impide un valor por defecto fuera de rango" y "Valores personalizados por nivel", con un caso por escenario:
   - inserciones válidas: numérica, booleana, en los límites y valor de plataforma;
   - inserciones rechazadas, cada una con el nombre de su restricción.
 
   Cada prueba revierte su transacción. Verificar: `.\mvnw.cmd verify` en verde.
-- [ ] 9.5 `ParametrosInicialesIT` comprueba:
+- [x] 9.5 `ParametrosInicialesIT` comprueba:
   - el contexto arranca con `ddl-auto: validate`;
   - `parametro` tiene exactamente las 8 definiciones de la tabla del spec;
   - `valor_parametro` está vacía;
@@ -84,9 +84,9 @@ No aplica: el contrato OpenAPI no cambia. Lo comprueba la prueba 9.7.
   - `obtenerDuracion(SESION_CLIENTE_DIAS_INACTIVIDAD)` devuelve 60 días.
 
   Verificar: `.\mvnw.cmd verify` en verde.
-- [ ] 9.6 `ConsultarParametroIT` inserta un valor de plataforma dentro de rango y comprueba que `ConsultarParametroUseCase` lo devuelve en lugar del por defecto; luego revierte la transacción. Verificar: `.\mvnw.cmd verify` en verde.
-- [ ] 9.7 `ContratoOpenApiIT` consulta `/docs/api-docs` y comprueba que ninguna ruta contiene `parametros`. Verificar: `.\mvnw.cmd verify` en verde.
-- [ ] 9.8 Revisar el reporte `target/site/jacoco/index.html`.
+- [x] 9.6 `ConsultarParametroIT` inserta un valor de plataforma dentro de rango y comprueba que `ConsultarParametroUseCase` lo devuelve en lugar del por defecto; luego revierte la transacción. Verificar: `.\mvnw.cmd verify` en verde.
+- [x] 9.7 `ContratoOpenApiIT` consulta `/docs/api-docs` y comprueba que ninguna ruta contiene `parametros`. Verificar: `.\mvnw.cmd verify` en verde.
+- [x] 9.8 Revisar el reporte `target/site/jacoco/index.html`.
   - Si las ramas quedan bajo el 80% por `*MapperImpl` después de la tarea 8.3, excluir `**/*MapperImpl*` en JaCoCo con el comentario de autorización de la decisión 12.
   - Si no, no excluir nada.
 

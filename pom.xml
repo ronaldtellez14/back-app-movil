@@ -183,6 +183,11 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<!-- Pruebas de integración (*IT) contra reservas_test; versión y ejecuciones del parent. -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>

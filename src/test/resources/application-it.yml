@@ -1,0 +1,7 @@
+# Perfil de las pruebas de integración (*IT). Usuario y contraseña salen de .env (DB_USER, DB_PASSWORD).
+spring:
+  datasource:
+    url: ${DB_TEST_URL:jdbc:postgresql://localhost:5432/reservas_test}
+  flyway:
+    # Solo en pruebas: FlywayLimpiezaSegura limpia la base, y solo si su nombre termina en _test.
+    clean-disabled: false
