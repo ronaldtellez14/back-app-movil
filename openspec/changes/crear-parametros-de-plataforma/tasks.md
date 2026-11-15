@@ -94,7 +94,7 @@ No aplica: el contrato OpenAPI no cambia. Lo comprueba la prueba 9.7.
 
 ## 10. Validation
 
-- [ ] 10.1 `.\mvnw.cmd verify` en verde: Spotless, surefire, failsafe y JaCoCo (80% en líneas y ramas). Verificar: la salida termina en `BUILD SUCCESS`.
-- [ ] 10.2 Revisar que los logs no expongan datos personales ni valores de parámetros: buscar en la salida de `verify` y en el arranque de la app que los errores solo registren `traza_id`, tipo y traza. Verificar: la búsqueda no encuentra mensajes de excepción ni datos.
-- [ ] 10.3 Crear `traceability.md` del cambio con una fila por escenario del spec: escenario, prueba que lo cubre y estado. Verificar: los 37 escenarios tienen una prueba, y su estado sale de una ejecución real de `verify`.
-- [ ] 10.4 `openspec validate crear-parametros-de-plataforma --strict` en verde. Verificar: la salida dice "is valid".
+- [x] 10.1 `.\mvnw.cmd verify` en verde: Spotless, surefire, failsafe y JaCoCo (80% en líneas y ramas). Verificar: la salida termina en `BUILD SUCCESS`.
+- [x] 10.2 Revisar que los logs no expongan datos personales ni valores de parámetros: buscar en la salida de `verify` y en el arranque de la app que los errores solo registren `traza_id`, tipo y traza. Verificar: la búsqueda no encuentra mensajes de excepción ni datos.
+- [x] 10.3 Crear `traceability.md` del cambio con una fila por escenario del spec: escenario, prueba que lo cubre y estado. Verificar: los 37 escenarios tienen una prueba, y su estado sale de una ejecución real de `verify`.
+- [x] 10.4 `openspec validate crear-parametros-de-plataforma --strict` en verde. Verificar: la salida dice "is valid".

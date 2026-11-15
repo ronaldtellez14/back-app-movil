@@ -19,6 +19,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -64,9 +66,20 @@ class ConsultarParametroServiceTest {
             ParametroException.class,
             ex -> {
               assertThat(ex.codigo()).isEqualTo(CodigoErrorParametro.PARAMETRO_NO_EXISTE);
+              assertThat(ex.getMessage())
+                  .isEqualTo(CodigoErrorParametro.PARAMETRO_NO_EXISTE.mensaje());
               assertThat(ex.clave()).isEqualTo(CLAVE);
             });
     verify(cargarParametroPort, never()).buscarValorDePlataforma(CLAVE);
+  }
+
+  @ParameterizedTest
+  @ValueSource(longs = {1, 100})
+  void valorGuardadoEnLosLimitesDelRangoSeEntrega(long limite) {
+    dadaLaDefinicion(numerica(TipoParametro.ENTERO, 5));
+    conValorGuardado(new ValorParametro.Numero(limite));
+
+    assertThat(servicio.obtenerEntero(CLAVE)).isEqualTo(limite);
   }
 
   @Test

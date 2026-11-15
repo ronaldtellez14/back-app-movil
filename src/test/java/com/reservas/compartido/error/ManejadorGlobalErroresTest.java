@@ -13,6 +13,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpMethod;
@@ -128,10 +130,10 @@ class ManejadorGlobalErroresTest {
     assertThat(respuesta.getBody().toString()).doesNotContain("ana@ejemplo.com");
   }
 
-  @Test
-  void parametroExceptionDevuelve500SinClaveValorRangoNiMensaje() {
-    ParametroException ex =
-        new ParametroException(CodigoErrorParametro.PARAMETRO_FUERA_DE_RANGO, CLAVE);
+  @ParameterizedTest
+  @EnumSource(CodigoErrorParametro.class)
+  void parametroExceptionDevuelve500SinClaveValorRangoNiMensaje(CodigoErrorParametro codigo) {
+    ParametroException ex = new ParametroException(codigo, CLAVE);
 
     ResponseEntity<RespuestaError> respuesta = manejador.manejarInesperado(ex);
 
@@ -141,8 +143,8 @@ class ManejadorGlobalErroresTest {
     assertThat(cuerpo.campos()).isEmpty();
     assertThat(cuerpo.toString())
         .doesNotContain(CLAVE)
-        .doesNotContain(CodigoErrorParametro.PARAMETRO_FUERA_DE_RANGO.name())
-        .doesNotContain(CodigoErrorParametro.PARAMETRO_FUERA_DE_RANGO.mensaje());
+        .doesNotContain(codigo.name())
+        .doesNotContain(codigo.mensaje());
   }
 
   @Test
