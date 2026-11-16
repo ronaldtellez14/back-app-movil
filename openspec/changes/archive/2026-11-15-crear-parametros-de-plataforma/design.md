@@ -40,7 +40,7 @@ com.reservas.parametros/
 │   ├── NivelParametro              ← PLATAFORMA, NEGOCIO, PROFESIONAL
 │   ├── ValorParametro              ← tipo sellado: Numero(long), Booleano(boolean), ListaEnteros(List<Long>)
 │   ├── DefinicionParametro         ← clave, descripción, tipo, por defecto, mín., máx., nivel máximo; valida el rango
-│   ├── CodigoErrorParametro        ← PARAMETRO_NO_EXISTE, PARAMETRO_FUERA_DE_RANGO (código y mensaje constantes)
+│   ├── CodigoErrorParametro        ← PARAMETRO_NO_EXISTE, PARAMETRO_FUERA_DE_RANGO (el código es el nombre del enum; mensaje constante)
 │   └── ParametroException          ← excepción de dominio con su código y la clave
 ├── application/port/input/
 │   ├── ConsultarParametroUseCase   ← obtenerEntero, obtenerDuracion, obtenerBooleano, obtenerListaEnteros
@@ -95,7 +95,7 @@ Si se pide un tipo que no corresponde a la clave (por ejemplo, `obtenerEntero` s
 
 ### 5. Errores de dominio sin Spring
 
-`CodigoErrorParametro` es un enum con `codigo` y `mensaje` constantes, sin `HttpStatus`.
+`CodigoErrorParametro` es un enum con un `mensaje` constante, sin `HttpStatus`; el código es el nombre del enum.
 
 `ParametroException` (una `RuntimeException`) lleva su código y la clave:
 - `getMessage()` devuelve el mensaje constante del código.
